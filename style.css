@@ -104,3 +104,32 @@ a:hover {
   font-size: 0.9rem;
   color: #666;
 }
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  .hero-form {
+    max-width: 100%;
+  }
+
+  .hero-form input,
+  .hero-form button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+}
