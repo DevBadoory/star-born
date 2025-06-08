@@ -133,3 +133,7 @@ a:hover {
     padding: 0 10px;
   }
 }
+
+.error {
+  color: #d50a0a;
+}
