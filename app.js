@@ -1,5 +1,6 @@
 import { TOKEN } from "./config.js";
 const form = document.querySelector(".hero-form");
+const aopdContainer = document.getElementById("aopd-container");
 let maxSelectableDate = "2025-06-08";
 
 form.addEventListener("submit", (e) => {
@@ -38,9 +39,22 @@ async function fetchData(date) {
     const aopd = await aopdResponse.json();
     const library = await libraryResponse.json();
 
-    console.log(aopd);
+    displayAopdCard(aopd);
     console.log(library);
   } catch (error) {
     console.error(error);
   }
+}
+
+function displayAopdCard(data) {
+  aopdContainer.innerHTML = `
+  <div class="card">
+    <h2 class="card-title">${data.title}</h2>
+    <img src="${data.url}" alt="${data.title}" />
+    <p class="card-explanation">${data.explanation}</p>
+    <p class="card-copyright">
+      ${data.copyright ? "Copyright: " + data.copyright : ""}
+    </p>
+  </div>
+  `;
 }

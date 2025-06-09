@@ -49,7 +49,7 @@ a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 80vh;
   text-align: center;
   padding: 2rem;
 }
@@ -136,4 +136,68 @@ a:hover {
 
 .error {
   color: #d50a0a;
+}
+
+#aopd-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
+  width: 100%;
+  text-align: left;
+  font-family: "Merriweather Sans", sans-serif;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-explanation {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.card-copyright {
+  color: gray;
+  font-size: 0.8rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .card h2 {
+    font-size: 1.25rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+  }
 }
