@@ -2,6 +2,8 @@ import { TOKEN } from "./config.js";
 const form = document.querySelector(".hero-form");
 const aopdContainer = document.getElementById("aopd-container");
 let maxSelectableDate = "2025-06-08";
+let loadingSpinner = document.querySelector(".loader");
+let submitButtonText = document.querySelector(".btn-text");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -27,6 +29,8 @@ form.addEventListener("submit", (e) => {
 async function fetchData(date) {
   let year = date.slice(0, 4);
   try {
+    loadingSpinner.style.display = "flex";
+    submitButtonText.textContent = "Loading...";
     const [aopdResponse, libraryResponse] = await Promise.all([
       fetch(
         `https://api.nasa.gov/planetary/apod?api_key=${TOKEN}&date=${date}`
@@ -43,6 +47,9 @@ async function fetchData(date) {
     console.log(library);
   } catch (error) {
     console.error(error);
+  } finally {
+    submitButtonText.textContent = "✨ Show My Space Moment";
+    loadingSpinner.style.display = "none";
   }
 }
 
