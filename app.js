@@ -54,14 +54,26 @@ async function fetchData(date) {
 }
 
 function displayAopdCard(data) {
+  const isImage = data.media_type === "image";
+
   aopdContainer.innerHTML = `
-  <div class="card">
-    <h2 class="card-title">${data.title}</h2>
-    <img src="${data.url}" alt="${data.title}" />
-    <p class="card-explanation">${data.explanation}</p>
-    <p class="card-copyright">
-      ${data.copyright ? "Copyright: " + data.copyright : ""}
-    </p>
-  </div>
+    <div class="card">
+      <h2 class="card-title">${data.title}</h2>
+      ${
+        isImage
+          ? `<img src="${data.url}" alt="${data.title}" />`
+          : `<div class="video-wrapper">
+              <iframe src="${data.url}${
+              data.url.includes("?") ? "&" : "?"
+            }mute=1" frameborder="0" allowfullscreen title="${
+              data.title
+            }"></iframe>
+             </div>`
+      }
+      <p class="card-explanation">${data.explanation}</p>
+      <p class="card-copyright">
+        ${data.copyright ? "Copyright: " + data.copyright : ""}
+      </p>
+    </div>
   `;
 }
