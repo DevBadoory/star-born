@@ -252,3 +252,19 @@ a:hover {
     font-size: 0.95rem;
   }
 }
+
+.show-more {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.show-more:hover {
+  background-color: #6366f1;
+}
