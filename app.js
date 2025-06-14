@@ -64,27 +64,28 @@ function displayAopdCard(data) {
   const isExpandable = fullText.length > limit;
 
   aopdContainer.innerHTML = `
-  <div class="card">
-    <h2 class="card-title">${data.title}</h2>
-    ${
-      isImage
-        ? `<img src="${data.url}" alt="${data.title}" />`
-        : `<div class="video-wrapper">
-            <iframe src="${data.url}${
-            data.url.includes("?") ? "&" : "?"
-          }mute=1" frameborder="0" allowfullscreen title="${
-            data.title
-          }"></iframe>
-           </div>`
-    }
-    <div>
-      <span class="card-explanation">${fullText.slice(0, limit)}...</span>
-      ${isExpandable ? '<button class="show-more">Show More</button>' : ""}
+    <h1 class="section-title">Astronomy Picture of the Day</h1>
+    <div class="card">
+      <h2 class="card-title">${data.title}</h2>
+      ${
+        isImage
+          ? `<img src="${data.url}" alt="${data.title}" />`
+          : `<div class="video-wrapper">
+              <iframe src="${data.url}${
+              data.url.includes("?") ? "&" : "?"
+            }mute=1" frameborder="0" allowfullscreen title="${
+              data.title
+            }"></iframe>
+            </div>`
+      }
+      <div>
+        <span class="card-explanation">${fullText.slice(0, limit)}...</span>
+        ${isExpandable ? '<button class="show-more">Show More</button>' : ""}
+      </div>
+      <p class="card-copyright">
+        ${data.copyright ? "Copyright: " + data.copyright : ""}
+      </p>
     </div>
-    <p class="card-copyright">
-      ${data.copyright ? "Copyright: " + data.copyright : ""}
-    </p>
-  </div>
 `;
 
   if (isExpandable) {
@@ -115,6 +116,7 @@ function displayLibrary(data) {
   }
 
   currentPage = 0;
+  ``;
   libraryContainer.innerHTML = `
     <h1 class="section-title">NASA Library</h1>
     <div id="display-cards"></div>
