@@ -5,6 +5,9 @@ const libraryContainer = document.getElementById("library-container");
 let maxSelectableDate = "2025-06-08";
 let loadingSpinner = document.querySelector(".loader");
 let submitButtonText = document.querySelector(".btn-text");
+let allLibraryItems = [];
+let itemsPerPage = 5;
+let currentPage = 0;
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -102,15 +105,37 @@ function setupShowMoreToggle(button, textElement, fullText, limit) {
     button.textContent = isExpanded ? "Show less" : "Show More";
   });
 }
-function displayLibrary(data) {
-  console.log(data);
-  let items = data.collection.items;
 
+function displayLibrary(data) {
+  allLibraryItems = data.collection.items;
+
+  if (!allLibraryItems.length) {
+    libraryContainer.innerHTML = `<p class="no-results">No library items found for this year.</p>`;
+    return;
+  }
+
+  currentPage = 0;
   libraryContainer.innerHTML = `
     <h1 class="section-title">NASA Library</h1>
+    <div id="display-cards"></div>
+    <button id="load-more">Load More</button>
   `;
 
-  items.forEach((item) => {
+  let loadMoreButton = document.getElementById("load-more");
+  renderLibraryCards();
+
+  loadMoreButton.addEventListener("click", () => {
+    renderLibraryCards();
+  });
+}
+
+function renderLibraryCards() {
+  let start = currentPage * itemsPerPage;
+  let end = (currentPage + 1) * itemsPerPage;
+  let itemsToRender = allLibraryItems.slice(start, end);
+  let displayCard = document.getElementById("display-cards");
+
+  itemsToRender.forEach((item) => {
     const title = item.data[0].title;
     const description = item.data[0].description || "";
     const location = item.data[0].location || "";
@@ -135,7 +160,7 @@ function displayLibrary(data) {
       ${copyright ? `<p class="card-copyright">Source: ${copyright}</p>` : ""}
     `;
 
-    libraryContainer.appendChild(card);
+    displayCard.append(card);
 
     if (isExpandable) {
       const showMoreButton = card.querySelector(".show-more");
@@ -143,4 +168,10 @@ function displayLibrary(data) {
       setupShowMoreToggle(showMoreButton, explanationSpan, description, limit);
     }
   });
+  currentPage++;
+
+  if (currentPage * itemsPerPage >= allLibraryItems.length) {
+    let loadMoreButton = document.getElementById("load-more");
+    loadMoreButton.style.display = "none";
+  }
 }
