@@ -188,6 +188,7 @@ a:hover {
   font-family: "Merriweather Sans", sans-serif;
   color: #333;
   transition: transform 0.3s ease;
+  margin-bottom: 2rem;
 }
 
 .card:hover {
@@ -267,4 +268,24 @@ a:hover {
 
 .show-more:hover {
   background-color: #6366f1;
+}
+
+#library-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+@media (max-width: 600px) {
+  #library-container {
+    gap: 2rem;
+    padding: 1rem;
+  }
+}
+
+.card-location {
+  color: gray;
+  margin-top: 2rem;
 }

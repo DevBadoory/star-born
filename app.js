@@ -1,6 +1,7 @@
 import { TOKEN } from "./config.js";
 const form = document.querySelector(".hero-form");
 const aopdContainer = document.getElementById("aopd-container");
+const libraryContainer = document.getElementById("library-container");
 let maxSelectableDate = "2025-06-08";
 let loadingSpinner = document.querySelector(".loader");
 let submitButtonText = document.querySelector(".btn-text");
@@ -44,7 +45,7 @@ async function fetchData(date) {
     const library = await libraryResponse.json();
 
     displayAopdCard(aopd);
-    console.log(library);
+    displayLibrary(library);
   } catch (error) {
     console.error(error);
   } finally {
@@ -99,5 +100,47 @@ function setupShowMoreToggle(button, textElement, fullText, limit) {
       ? fullText
       : fullText.slice(0, limit) + "...";
     button.textContent = isExpanded ? "Show less" : "Show More";
+  });
+}
+function displayLibrary(data) {
+  console.log(data);
+  let items = data.collection.items;
+
+  libraryContainer.innerHTML = `
+    <h1 class="section-title">NASA Library</h1>
+  `;
+
+  items.forEach((item) => {
+    const title = item.data[0].title;
+    const description = item.data[0].description || "";
+    const location = item.data[0].location || "";
+    const copyright = item.data[0].center || "";
+    const url = item.links && item.links[0] ? item.links[0].href : "";
+    const limit = 200;
+    const isExpandable = description.length > limit;
+
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    card.innerHTML = `
+      <h2 class="card-title">${title}</h2>
+      <img src="${url}" alt="${title}" />
+      <div>
+        <span class="card-explanation">${description.slice(0, limit)}${
+      isExpandable ? "..." : ""
+    }</span>
+        ${isExpandable ? '<button class="show-more">Show More</button>' : ""}
+      </div>
+      ${location ? `<p class="card-location">Location: ${location}</p>` : ""}
+      ${copyright ? `<p class="card-copyright">Source: ${copyright}</p>` : ""}
+    `;
+
+    libraryContainer.appendChild(card);
+
+    if (isExpandable) {
+      const showMoreButton = card.querySelector(".show-more");
+      const explanationSpan = card.querySelector(".card-explanation");
+      setupShowMoreToggle(showMoreButton, explanationSpan, description, limit);
+    }
   });
 }
